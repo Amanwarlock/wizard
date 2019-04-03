@@ -124,8 +124,30 @@ user: stkliveadmin
 pwd: DV9TG#pyv%4t
 
 
+pm2 delete config
+
+cat /etc/motd = message of the day (figlet)
+
+sudo chmod -R 0777 *
+sudo chmod 400 SK_DEV_INDO.pem
+fuser -n tcp -k 9001 
+ps aux | grep postman/chrome
+sftp aman@192.168.0.92 => get -r "home/aman/Desktop" "destination" 
+-----------------------------------------------------------------------------------------------------------------
+Mongodb
+sudo service mongod start
+sudo systemctl status mongod
+systemctl enable mongod.service
+
+tail -f /var/log/mongodb/mongod.log
+
+https://nathanhoad.net/how-to-meld-for-git-diffs-in-ubuntu-hardy
+
+
 #################################################################SERVER CREDENTIALS#####################################################################################################
 
+	fuser -n tcp -k 9001 	
+	
 	QA SERVER : ssh -i ~/.ssh/id_rsa -p 969 stkuser@13.126.75.175
 
 	STAGING : ssh -i ~/.ssh/id_rsa -p 969 stkuser@13.126.213.242
@@ -150,15 +172,16 @@ pwd: DV9TG#pyv%4t
 
 	ssh -fN -i ~/.ssh/id_rsa -L 6666:localhost:27017 stkuser@35.154.220.245 -p 969 --- LIVE WORKING
 
-######################################################################################################################################################################
+###################################################################---MELD---###################################################################################################
+
+https://nathanhoad.net/how-to-meld-for-git-diffs-in-ubuntu-hardy
 
 
-13.126.167.108 27017
-
-auth DB =  admin
-user: stkadmin
-pwd: m3Uy$dPXeL$4
-
+sudo chmod -R 0777 *
+sudo chmod 400 SK_DEV_INDO.pem
+fuser -n tcp -k 9001 
+ps aux | grep postman/chrome
+sftp aman@192.168.0.92 => get -r "home/aman/Desktop" "destination" 
 
 ###########################################################################################################################################################################################################
 								---------------:MONGO SNIPPETS:----------------
@@ -226,5 +249,4 @@ Adding to server: Always add your public key , not private key . For comments us
 
 
 ###########################################################################################################################################################################################################
-
 
