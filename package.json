@@ -1,0 +1,20 @@
+{
+  "name": "wizard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "India_work.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amanwarlock/wizard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amanwarlock/wizard/issues"
+  },
+  "homepage": "https://github.com/Amanwarlock/wizard#readme"
+}
