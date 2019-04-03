@@ -1,0 +1,97 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+        "spec": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "bitbucket",
+          "ssh": "git@bitbucket.org:amankareem/wmfintegration.git",
+          "sshUrl": "git+ssh://git@bitbucket.org/amankareem/wmfintegration.git",
+          "httpsUrl": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+          "shortcut": "bitbucket:amankareem/wmfintegration",
+          "directUrl": "https://bitbucket.org/amankareem/wmfintegration/raw/master/package.json"
+        }
+      },
+      "/home/aman/work/skworkspace/sk_oms"
+    ]
+  ],
+  "_from": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+  "_id": "wmfintegration@1.0.0",
+  "_inCache": true,
+  "_location": "/wmfintegration",
+  "_phantomChildren": {
+    "asynckit": "0.4.0",
+    "combined-stream": "1.0.6",
+    "fast-deep-equal": "2.0.1",
+    "fast-json-stable-stringify": "2.0.0",
+    "forever-agent": "0.6.1",
+    "har-schema": "2.0.0",
+    "is-typedarray": "1.0.0",
+    "isstream": "0.1.2",
+    "json-schema-traverse": "0.4.1",
+    "json-stringify-safe": "5.0.1",
+    "jsprim": "1.4.1",
+    "performance-now": "2.1.0",
+    "psl": "1.1.29",
+    "sshpk": "1.14.1"
+  },
+  "_requested": {
+    "raw": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+    "spec": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "bitbucket",
+      "ssh": "git@bitbucket.org:amankareem/wmfintegration.git",
+      "sshUrl": "git+ssh://git@bitbucket.org/amankareem/wmfintegration.git",
+      "httpsUrl": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+      "shortcut": "bitbucket:amankareem/wmfintegration",
+      "directUrl": "https://bitbucket.org/amankareem/wmfintegration/raw/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://bitbucket.org/amankareem/wmfintegration.git#eb01b371509b07657ab9b0aadc1593ffac4b8cbb",
+  "_shasum": "7319bd2a642296f57077915baa513a004d20103d",
+  "_shrinkwrap": null,
+  "_spec": "git+https://bitbucket.org/amankareem/wmfintegration.git",
+  "_where": "/home/aman/work/skworkspace/sk_oms",
+  "author": "",
+  "dependencies": {
+    "async": "^2.6.1",
+    "chalk": "^2.4.1",
+    "lodash": "^4.17.11",
+    "oauth-1.0a": "^2.2.5",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
+  },
+  "description": "### INSTALLATION ``` sh     npm install git+https://bitbucket.org/amankareem/wmfintegration.git --save ```",
+  "devDependencies": {},
+  "gitHead": "eb01b371509b07657ab9b0aadc1593ffac4b8cbb",
+  "homepage": "https://bitbucket.org/amankareem/wmfintegration#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "wmfintegration",
+  "optionalDependencies": {},
+  "readme": "\n# WMF's INTERGRATION LAYER\n\n### INSTALLATION\n``` sh\n    npm install git+https://bitbucket.org/amankareem/wmfintegration.git --save\n```\n\n### SET UP\n```sh\n    var wmfIntergration = require(\"wmfintegration\");\n    wmfIntergration = new wmfIntergration();\n    wmfIntergration.init(process.env, logger);\n```",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/amankareem/wmfintegration.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

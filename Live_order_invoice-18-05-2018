@@ -1,0 +1,133 @@
+https://storeking.atlassian.net/issues/?filter=-1
+
+
+-------------------------------------------------------------------STOCK MIGRATION GRN---------------------------------------------------------------------------------------------------------------------
+
+	    GRN1452 	- Done
+	    GRN1453 - 	- Done
+	    GRN1454	- Done
+	    GRN1455	- Done
+	    GRN1456	- Done
+	    GRN1457	- Done
+	    GRN1458	- Done
+	    GRN1459	- Done
+	    GRN1460	- Done
+	    GRN1461	- Done
+	    GRN1462	- Done
+	    GRN1463	- Done
+	    GRN1464	- Done		
+
+
+---------------------------------------------------------------------------------------------------
+
+	1. onHold Logic  -Remove
+	2. Barcode if already associated validation
+	3. Location validation and isGoodsock of undefined validation
+	4. If movement or correction fails then revert logic for a given ledger
+
+-------------------------------------------------------------------INVOICE ISSUE----------------------------------------------------------------------
+	OR20181105111151 - IN181036609 - Invoice got generated twice itseems - verify
+	
+	* possibly swapped happend and invoice got generated but release dint happen.
+	
+	5663
+
+
+	INWMF026 PR1402-1 TR1327 BOXID894-1
+
+
+https://newerp.storeking.in/#/order/batch/scanProformaInvoice/BR20190222198A/PR194870#PR15516
+
+
+
+GRN4681 - STFR19427
+GRN4680 - STFR19429 , STFR19425 , STFR19430
+GRN4679 - STFR19417
+
+GRN4678 - STFR19420
+GRN4677 - STFR19426
+
+GRN4681
+GRN4680
+GRN4679
+GRN4678
+GRN4677
+
+
+
+/*
+GRN4680
+
+PR10451 - WH57431 - 1890 = 1512 - done
+PR10388 - WH57430 - 1440 = 600 - done
+PR10396 - WH57435 - 1500 = 1100 - done
+PR11494 - WH57432 - 720  = 660 - done
+PR10391 - WH57433 - 4500 = 3595 - done
+PR10412 - WH57436 - 2160 = 690
+PR11435 - WH57434 - 500 = 68
+*/
+
+
+
+
+BULKSTOCKAJUSTMENTCORRECTION - 	ETE318
+BULKASNUPLOAD - TE70
+
+----------------------------------------------SWAPPING ISSUE---------------------------------------------------------------------------------------------
+//OR20190313280411  -swap -IN181111483
+
+db.stockledgers.find({"reference.subOrderId" : "OR20190313280411_2"});
+
+//ISODate("2019-03-13T19:39:40.763+05:30") ISODate("2019-03-13T20:56:36.033+05:30"),
+db.stockledgers.find({snapShotId : "WH62844"});
+
+
+
+----------------------------------------------------------------------------------------------------------------
+https://bitbucket.org/storekingdev/sk_portal/branch/hotfix/grn-dealprice-issue#diff
+
+
+bulkInvoiceScan - product level
+stackStockByMrp - category level
+
+
+
+
+color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+
+
+
+
+
+
+
+mongoexport --db skstaging --collection omsinvoices -u skaman -p QdEN96NQMspbGDtXrHRWDQ -h localhost --port 6161 --query '{_id: {$in : ["IN201003985","IN201003938","IN201003867","IN201004228","IN201004236","IN201004096","IN201004095","IN201004091","IN201003975","IN201003547","IN201003545","IN201003546","IN201003548","IN201003549"]} }' --type json  --out /home/aman/Desktop/invoice-compare/export.json
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

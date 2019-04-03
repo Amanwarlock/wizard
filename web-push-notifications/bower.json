@@ -1,0 +1,17 @@
+{
+  "name": "web-push-notifications",
+  "description": "A node , angularjs and bootstrap web notifications app using different plugins",
+  "main": "server.js",
+  "authors": [
+    "Aman Kareem"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

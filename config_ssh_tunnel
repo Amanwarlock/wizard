@@ -1,0 +1,13 @@
+Host Tunnel
+	HostName 35.154.220.245
+	port 969
+	User stkuser
+	LocalForward 127.0.0.1:6161 127.0.0.1:27017
+
+Host ETL
+	HostName 13.232.164.185
+	port 969
+	user stkuser
+	LocalForward 127.0.0.1:6162 127.0.0.1:27017
+
+

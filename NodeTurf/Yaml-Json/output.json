@@ -1,0 +1,4348 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Warehouse"
+  },
+  "host": "localhost:10027",
+  "basePath": "/wh",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/stockledger": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_listStockLedgers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort option Parameters",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/stockledger/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_LedgerCount",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter stock ledger based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Update failure, redo operaiton"
+          }
+        }
+      }
+    },
+    "/v1/stockledger/bulkStockVariation": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_bulkStockVariation",
+        "description": "This api is for any bulk or single stock variation requests",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/stock_ledger"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/bulkGetProductSnapshots": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_bulkGetProductSnapshots",
+        "parameters": [
+          {
+            "name": "productIds",
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "extraFields",
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/webhook/correction/onDecreaseWebhook": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "This is the webhook end point invoked from stockLedger api in warehouse post stock reservation",
+        "operationId": "v1_onStockDecreaseWebhook",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/webhook_instance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/webhook/onStockMovementWebhook": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "This is the webhook end point invoked from stockLedger api in warehouse post stock reservation",
+        "operationId": "v1_onStockMovementWebhook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "snapshot",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/webhook_instance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/update/{id}/category": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_updateChangesInCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/reservation/schedulerBasedTrigger": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_schedulerBasedTrigger",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/inventoryBuckets": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_inventoryBuckets",
+        "parameters": [
+          {
+            "name": "bucketsOnly",
+            "in": "query",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/inventory_buckets"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/enginedInventoryBuckets": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_enginedInventoryBuckets",
+        "parameters": [
+          {
+            "name": "bucketsOnly",
+            "in": "query",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/engined_buckets"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/dealSync": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_dealSync",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/inventory/locationwise": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_locationWiseInventories",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/inventory/locationwise/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_locationWiseInventoriesCount",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/getProductBarcodes/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getProductBarcodes",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/update/{id}/product": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_updateChangesInProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/removeFromWarehouse": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_removeFromWarehouse",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/removeProducts"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/returnProducts": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_returnProducts",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/returnProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/snapshot": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Inventory snapshot List",
+        "operationId": "v1_getSnapshotList",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "filter"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string",
+            "description": "select"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "description": "sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/snapshotList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "v1_swapImei",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "description": "details of the product to be held",
+            "schema": {
+              "$ref": "#/definitions/SwapIMEIDetails"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/bulk/snapshot": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Inventory bulk snapshot List",
+        "operationId": "v1_getbulkSnapshot",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "type": "string",
+            "description": "Comma seperated productID",
+            "required": true
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string",
+            "description": "Comma seperated list of Fields to be returned"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/snapshotList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/prdAvailability/{whId}/{productId}/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getPrdAvailabilityCount",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventoryStockbyLocation/{whId}/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getTotalQtybyinventory",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull"
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventoryStockdet/{input}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getTotalQtybybarcodeSerialNo",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "serial",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "performaId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "stock details"
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/stockdetBySerialOrBarcode": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getStockybybarcodeSerialNo",
+        "parameters": [
+          {
+            "name": "barcode",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "serial",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "performaId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "stock details"
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/snapshot/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_count",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull"
+          },
+          "400": {
+            "description": "Update failure, redo operaiton",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/snapshot/{id}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getSnapshot",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/onHold": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_holdProduct",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "description": "warehouseId",
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "description": "details of the product to be held",
+            "schema": {
+              "$ref": "#/definitions/holdProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/stockAdjustment/getAutoCalculatedCost": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getAutoCalculatedCost",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "type": "string",
+            "description": "Product Id"
+          },
+          {
+            "name": "whIdlk",
+            "in": "query",
+            "type": "string",
+            "description": "Warehouse Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/getSnapshotFromCategory": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns the best inventory snapshot available.",
+        "operationId": "v1_getSnapshotFromCategory",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the best inventory snapshot."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/getSnapshotByCategory": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns the best inventory snapshot available.",
+        "operationId": "v1_getSnapshotByCategory",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the best inventory snapshot."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/getConsumableSnapshot": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns the best inventory snapshot available.",
+        "operationId": "v1_getConsumableSnapshot",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the snapshot of the consumable product."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/barcode/{id}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "get a list of product Ids with the same barcode",
+        "operationId": "v1_getProdFromBarcode",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "ID of the product",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "serial",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product Id"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/decreaseStockAndAddNew": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns the best inventory snapshot available.",
+        "operationId": "v1_decreaseStockAndAddNew",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "inventoryId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the snapshot of the consumable product."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/addHoldStock": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Reserve Stock into Hold",
+        "operationId": "v1_addHoldStock",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/holdStock"
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the snapshot ."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/updateHoldStatus/{snapshotId}": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Reserve Stock into Hold",
+        "operationId": "v1_updateHoldStatus",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "snapshotId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the snapshot ."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/decreaseStock": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns the best inventory snapshot available.",
+        "operationId": "v1_deceaseStock",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "inventoryId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the snapshot of the consumable product."
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockAdjustment": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_postAdjustStock",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/stockDetails"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockDetails"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getAdjustStock",
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockDetails"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockAdjustment/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getAdjustStockCount",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of accounts per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockDetails"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockAdjustment/{id}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_approveAdjustStock",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Approved",
+              "Cancelled"
+            ]
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/adjStock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockDetails"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_showAdjustStock",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventory/create": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "This Api is used to created inventories. This can take array of snapshots and creates in one go",
+        "operationId": "v1_createInventories",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/inventory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventory"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/bulkInsert": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_bulkCreate",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/inventoryList"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventory_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/suggestAllotableLoc/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_suggestAllotableLoc",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventoryList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/inventory/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_addProducts",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/inventory_instance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventory_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getProductSnapshots",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventory_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventory/product/{productId}/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getProductCount",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventory/product/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getProducts",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/inventoryList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/getProductLocation": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available Locations in the warehouse",
+        "operationId": "v1_getProductLocation",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns available Locations in the warehouse"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{id}/area": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "Create an area inside a location",
+        "operationId": "v1_createArea",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/area"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get a particular area in product",
+            "schema": {
+              "$ref": "#/definitions/area"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update an area inside a location",
+        "operationId": "v1_updateArea",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/area"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update a particular area in product",
+            "schema": {
+              "$ref": "#/definitions/area"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Create an area inside a location",
+        "operationId": "v1_getAreas",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "type": "string",
+            "in": "query",
+            "description": "filter deals"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get a particular area in product",
+            "schema": {
+              "$ref": "#/definitions/area"
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventory/{productId}/onhold": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_addProductsOnHold",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/onHold"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getProductsOnHold",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/{areaId}/rack": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Updates rack name",
+        "operationId": "v1_editRack",
+        "parameters": [
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "rackId": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "isGoodStock": {
+                  "type": "boolean",
+                  "default": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/rack_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_addRack",
+        "parameters": [
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/rack_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getRack",
+        "parameters": [
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/rackList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/{areaId}/rack/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getRackCount",
+        "parameters": [
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the count of racks in the warehouse",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/{areaId}/rack/{rackId}": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Updates rack name",
+        "operationId": "v1_editBin",
+        "parameters": [
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rackId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "rackId": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/rack_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_addBin",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rackId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/bin_instance"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getBin",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rackId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/binList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/area/{areaId}/rack/{rackId}/bin/{binId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getProductsInbin",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rackId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "binId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "areaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/binList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockTransfer": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_postStockTransfer",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getStockTransfer",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockTransfer/{id}": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_approveStockTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Approved",
+              "Rejected"
+            ]
+          },
+          {
+            "name": "statusRemarks",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/remarks"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_showStockTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockTransfer/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns available and onhold stock for the product in the warehouse",
+        "operationId": "v1_getStockTransferCount",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of accounts per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity",
+            "schema": {
+              "$ref": "#/definitions/stockTransfer"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/expired": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns number of expired products",
+        "operationId": "v1_getTotalExpiredProductNumber",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "catId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "brandId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the number of total expired products"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/stockLedger": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Stock Ledger changes",
+        "operationId": "v1_getStockLedger",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "filter"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "number",
+            "description": "page no"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "number",
+            "description": "Count of records"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the list of stock ledger",
+            "schema": {
+              "$ref": "#/definitions/inventoryList"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/{whId}/stockLedger/{productId}/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Returns stockLedger Count",
+        "operationId": "v1_stockLedgerCount",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/stockLedger/moveToES": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_moveToEsStockLedger",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/list": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getImeiList",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "display",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "displayType",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the entites"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "No products to list with the given parameter set."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "operationId": "v1_putSwapEntry",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Enters swapped IMEI number entry in imeinos collection.",
+            "schema": {
+              "$ref": "#/definitions/SwapIMEIDetails"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated collection w/ swap object."
+          },
+          "400": {
+            "description": "Bad parameters"
+          }
+        }
+      }
+    },
+    "/v1/imei/count": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_imeiCount",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Update failure, redo operaiton"
+          }
+        }
+      }
+    },
+    "/v1/imei/list/{fid}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getImeiListFid",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Page number of the request"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the entites"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "No products to list with the given parameter set."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/imei/transfer/{rmfId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getImeiTransferableList",
+        "parameters": [
+          {
+            "name": "rmfId",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Page number of the request"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "displayType",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "searchParam",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "imeiType",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "sortingType",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the entites"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "No products to list with the given parameter set."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/imei/{id}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getImeiById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "ID of the product",
+            "required": true
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string",
+            "description": "Comma seperated list of Fields to be returned"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the entites"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "No products to list with the given parameter set."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/imei/commission/{fid}/{id}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getImeiCommission",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "type": "string",
+            "description": "ID of the product",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "ID of the product",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the entites"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "No products to list with the given parameter set."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/imei/resendOtp": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_resendImeibOtp",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resend_otp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of updated values",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad data"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/imei/bulkupdateimei": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_updateImeiOrderIds",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/imeiUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/activate/{fid}/{id}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_activateImei",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/imeiActivation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/verifyOtp/{fid}/{id}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_verifyImeiOtp",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/imeiActivationOtp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/resendOtp/{fid}/{id}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_resendImeiOtp",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/imeiResendOtp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/approve/{id}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_approveImei",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/imei/{fid}/getPendingActivations": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getPendingActivations",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "description": "Franchise Id",
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/imei/{fid}/getTotalActivated": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getTotalActivated",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "description": "Franchise Id",
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/availableproductcount/{whId}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_getAvailableProductCount",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/putProductsOnHold/{whId}/{boxCount}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_putProductsOnHold",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "boxCount",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/procureProductList/{boxCount}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_procureProductList",
+        "parameters": [
+          {
+            "name": "boxCount",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/updateonholdqty": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_updateonholdqty",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/revertbackholdedstock": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_revertBackHoldedStock",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/createSnapshotsforBreakedBox": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_creatingSnapshotsforBreakedBox",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/imei/transfer": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_transferImeiFroRmfToRf",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Imeitransferrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/updateScannedBox/{whId}": {
+      "x-swagger-router-controller": "controller",
+      "post": {
+        "operationId": "v1_updateScannedBox",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Bad parameters"
+          },
+          "401": {
+            "description": "Unauthorised"
+          },
+          "404": {
+            "description": "Invalid Order Id"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/getSuggestedBoxToCreate": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getSuggestedBoxToCreate",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Update failure, redo operaiton",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/fulfillmentcenter/{id}": {
+      "x-swagger-router-controller": "controller",
+      "put": {
+        "operationId": "v1_updateFc",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fc_create"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns stockLedger Count"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/fulfillmentcenter": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "description": "Inventory snapshot List",
+        "operationId": "v1_getFcList",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number of the request"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of products per page"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "filter"
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "type": "string",
+            "description": "select"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "description": "sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the onhold and available product quantity"
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creating fulfillment center",
+        "operationId": "v1_createFc",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fc_create"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/bulkGetProductStock/{whId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_bulkGetProductStock",
+        "parameters": [
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "productIds",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "description": "Comma separted IDS"
+          },
+          {
+            "name": "extraFields",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/inventoryStockSummary/{whId}/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_getProductStockSummary",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "whId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "type": "string",
+            "description": "Filter products based on fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull"
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/autoSuggestOfferText/{productId}": {
+      "x-swagger-router-controller": "controller",
+      "get": {
+        "operationId": "v1_autoSuggestOfferText",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count sucessfull"
+          },
+          "400": {
+            "description": "Update failure",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "definitions": {
+    "resend_otp": {
+      "required": [
+        "imeiid",
+        "id"
+      ],
+      "properties": {
+        "imeiid": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "imeiUpdate": {
+      "required": [
+        "fid"
+      ],
+      "properties": {
+        "fid": {
+          "type": "string"
+        },
+        "imeiNos": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "productId": {
+                "type": "string"
+              },
+              "imeiNo": {
+                "type": "string"
+              },
+              "refSlab": {
+                "type": "string"
+              },
+              "orderId": {
+                "type": "number"
+              },
+              "subOrderId": {
+                "type": "number"
+              },
+              "invoiceId": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "imeiActivation": {
+      "required": [
+        "customerId",
+        "customerName",
+        "customerMobile",
+        "simActivationDate"
+      ],
+      "properties": {
+        "fid": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        },
+        "couponCode": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "number"
+        },
+        "orderType": {
+          "type": "string"
+        },
+        "customerName": {
+          "type": "string"
+        },
+        "customerage": {
+          "type": "number"
+        },
+        "customerGender": {
+          "type": "string"
+        },
+        "customerMobile": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "simActivationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "imeiActivationOtp": {
+      "required": [
+        "customerId",
+        "customerName",
+        "customerMobile",
+        "_id",
+        "otp"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "otp": {
+          "type": "string"
+        },
+        "fid": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        },
+        "customerName": {
+          "type": "string"
+        },
+        "customerage": {
+          "type": "number"
+        },
+        "customerGender": {
+          "type": "string"
+        },
+        "customerMobile": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "string"
+        }
+      }
+    },
+    "imeiResendOtp": {
+      "required": [
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        }
+      }
+    },
+    "remarks": {
+      "properties": {
+        "statusRemarks": {
+          "type": "string"
+        }
+      }
+    },
+    "removeProducts": {
+      "properties": {
+        "snapShotId": {
+          "type": "string"
+        },
+        "serialNo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quantity": {
+          "type": "number"
+        }
+      }
+    },
+    "returnProduct": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "snapShotId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "holdProduct": {
+      "properties": {
+        "products": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "productId": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "isSourceable": {
+                "type": "boolean"
+              },
+              "mrp": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "dealId": {
+          "type": "string"
+        },
+        "requested": {
+          "type": "number"
+        }
+      }
+    },
+    "holdStock": {
+      "properties": {
+        "snapShotId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        }
+      }
+    },
+    "onHold": {
+      "properties": {
+        "catId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "order": {
+          "type": "string"
+        }
+      }
+    },
+    "stockTransfer": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Approved",
+            "Rejected"
+          ]
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "productId": {
+                "type": "string"
+              },
+              "barcode": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "mrp": {
+                "type": "number"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "serialno": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string"
+              },
+              "area": {
+                "type": "string"
+              },
+              "rackId": {
+                "type": "string"
+              },
+              "binId": {
+                "type": "string"
+              },
+              "newLocation": {
+                "type": "string"
+              },
+              "newArea": {
+                "type": "string"
+              },
+              "newRack": {
+                "type": "string"
+              },
+              "newBin": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "remarks": {
+                "type": "string"
+              },
+              "whId": {
+                "type": "string"
+              },
+              "snapshot": {
+                "type": "string"
+              },
+              "statusRemarks": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "stockDetails": {
+      "required": [
+        "productId",
+        "quantity"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending"
+          ]
+        },
+        "productId": {
+          "type": "string"
+        },
+        "mrp": {
+          "type": "number"
+        },
+        "autoCalculatedCost": {
+          "type": "number"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "changeQtyBy": {
+          "type": "number"
+        },
+        "barcode": {
+          "type": "string"
+        },
+        "serialNo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "location": {
+          "type": "string"
+        },
+        "offer": {
+          "type": "string"
+        },
+        "area": {
+          "type": "string"
+        },
+        "rack": {
+          "type": "string"
+        },
+        "bin": {
+          "type": "string"
+        },
+        "shelfLife": {
+          "type": "string"
+        },
+        "cost": {
+          "type": "number"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "actionRemarks": {
+          "type": "string"
+        },
+        "whId": {
+          "type": "string"
+        },
+        "updateQuantity": {
+          "type": "boolean"
+        },
+        "snapshot": {
+          "type": "string"
+        },
+        "vat": {
+          "type": "number"
+        },
+        "purchasePrice": {
+          "type": "number"
+        },
+        "poId": {
+          "type": "string"
+        }
+      }
+    },
+    "snapshotList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/stockDetails"
+      }
+    },
+    "inventory": {
+      "required": [
+        "whId",
+        "inventoryList"
+      ],
+      "properties": {
+        "whId": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            }
+          }
+        },
+        "callback": {
+          "type": "object",
+          "properties": {
+            "magicKey": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object"
+            }
+          }
+        },
+        "inventoryList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inventory_instance"
+          }
+        }
+      }
+    },
+    "inventoryList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/inventory_instance"
+      }
+    },
+    "rackList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/rack_instance"
+      }
+    },
+    "binList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/bin_instance"
+      }
+    },
+    "area": {
+      "required": [
+        "location",
+        "status",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "whId": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "inventory_instance": {
+      "required": [
+        "quantity",
+        "rackId",
+        "binId",
+        "location"
+      ],
+      "properties": {
+        "productId": {
+          "type": "string"
+        },
+        "mrp": {
+          "type": "number"
+        },
+        "cost": {
+          "type": "number"
+        },
+        "offer": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "expDate": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "delivery_chalan": {
+          "type": "boolean"
+        },
+        "area": {
+          "type": "string"
+        },
+        "rackId": {
+          "type": "string"
+        },
+        "binId": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "string"
+        },
+        "poId": {
+          "type": "string"
+        },
+        "selfLife": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "intakeDate": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "ref": {
+          "type": "object",
+          "properties": {
+            "grn": {
+              "type": "string"
+            },
+            "po": {
+              "type": "string"
+            },
+            "invoice": {
+              "type": "string"
+            },
+            "vendor": {
+              "type": "string"
+            }
+          }
+        },
+        "barcode": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vat": {
+          "type": "number"
+        },
+        "purchasePrice": {
+          "type": "number"
+        },
+        "referencetype": {
+          "type": "string"
+        },
+        "onHold": {
+          "type": "number"
+        },
+        "serialNo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rack_instance": {
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "whId": {
+          "type": "string"
+        }
+      }
+    },
+    "bin_instance": {
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "whId": {
+          "type": "string"
+        },
+        "rackId": {
+          "type": "string"
+        }
+      }
+    },
+    "adjStock": {
+      "properties": {
+        "remarks": {
+          "type": "string"
+        }
+      }
+    },
+    "error_response": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "SwapIMEIDetails": {
+      "properties": {
+        "oldImeiNumber": {
+          "type": "string"
+        },
+        "newImeiNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "stock_ledger": {
+      "required": [
+        "list"
+      ],
+      "properties": {
+        "webhook": {
+          "type": "object",
+          "properties": {
+            "magicKey": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
+        },
+        "data": {
+          "type": "object"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "required": [
+              "snapShotId",
+              "warehouseId",
+              "productId",
+              "reference",
+              "referenceType",
+              "requestQty"
+            ],
+            "properties": {
+              "snapShotId": {
+                "type": "string"
+              },
+              "warehouseId": {
+                "type": "string"
+              },
+              "productId": {
+                "type": "string"
+              },
+              "reference": {
+                "type": "object"
+              },
+              "referenceType": {
+                "type": "string"
+              },
+              "requestQty": {
+                "type": "number"
+              },
+              "barcode": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "serialNo": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdBy": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "webhook_instance": {
+      "required": [
+        "list"
+      ],
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Imeitransferrequest": {
+      "required": [
+        "imei",
+        "rfId",
+        "rmfId"
+      ],
+      "properties": {
+        "imei": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rfId": {
+          "type": "string"
+        },
+        "rmfId": {
+          "type": "string"
+        }
+      }
+    },
+    "inventory_buckets": {
+      "required": [
+        "products"
+      ],
+      "properties": {
+        "products": {
+          "type": "array",
+          "items": {
+            "required": [
+              "whId",
+              "productId"
+            ],
+            "properties": {
+              "whId": {
+                "type": "string"
+              },
+              "productId": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "engined_buckets": {
+      "properties": {
+        "productIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "whIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "fc_create": {
+      "required": [
+        "whId"
+      ],
+      "properties": {
+        "whId": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

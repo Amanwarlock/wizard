@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RED BUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">Redbus</header>
+
+    <div class="container">
+
+        <p id='message'>Hello world !</p>
+
+        <input type="text" id="user-msg" class="msg-box" autofocus=true>
+
+        <button type="submit" onclick="onSubmit('user-msg' , 'message')">Submit</button>
+
+        <div class="history" id='history'>
+            <table class="history-table" id="history-table">
+                <th>Keys</th>
+                <th>Values</th>
+                <th>Action</th>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "chalk": "^2.4.1",
+    "cuti": "git+https://bitbucket.org/storekingdev/cuti.git",
+    "jsonexport": "^2.1.0",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "mongojs": "^2.5.0",
+    "mongoose": "^5.0.17",
+    "oauth": "^0.9.15",
+    "puttu-redis": "git+https://bitbucket.org/storekingdev/puttu-redis.git",
+    "wmfintegration": "git+https://bitbucket.org/amankareem/wmfintegration.git"
+  }
+}

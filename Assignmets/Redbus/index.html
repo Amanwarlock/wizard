@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>RedBus</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="cities.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="content">
+            <div class="content-image">
+                <img src="./images/bus_ico.svg" />
+            </div>
+            <div class="content-text">
+                <span class="discount">25% Off on tickets</span>
+                <br>
+                <span class="expiry">Expires in 2days</span>
+                <br>
+                <span class="brand-text">Book tickets now</span>
+            </div>
+        </div>
+
+        <!-- Input container -->
+        <div class="input-container">
+            <input type="text" class="user-input" id="city-search" placeholder="Leaving From" autofocus=true>
+            <div class="suggestion" id="city">
+
+            </div>
+            <input type="text" class="user-input" placeholder="Arriving At">
+        </div>
+
+        <!-- Date holder -->
+        <div class="date-holder">
+            <input type="text" class="date" placeholder="Date">
+            <input type="text" class="date" placeholder="Date">
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab" id="ac" onclick="onTabSelect('ac')">AC</button>
+            <button class="tab" id="nonAc" onclick="onTabSelect('nonAc')">Non Ac</button>
+            <button class="tab" id="sleeper" onclick="onTabSelect('sleeper')">Sleeper</button>
+        </div>
+
+        <!-- Button -->
+        <div class="btn-container">
+            <button class="search-btn">Search</button>
+        </div>
+
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

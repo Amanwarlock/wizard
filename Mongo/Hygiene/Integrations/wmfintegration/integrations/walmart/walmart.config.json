@@ -1,0 +1,12 @@
+{
+    "sandbox": {
+        "MerchantId": "b7095ff2-12fe-4c18-9b0a-946980d12202",
+        "consumerKey": "B3ZDUTWY",
+        "secretkey": "GP7G962PRJMK7KPT5IIMOJNC",
+        "userId": "11734210005032578",
+        "password": "123456",
+        "basePath": "https://www8.martjack.com/DeveloperAPI",
+        "frontApi": "http://frontapi-wm.martjack.com/V2"
+    },
+    "production": {}
+}

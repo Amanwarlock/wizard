@@ -1,0 +1,24 @@
+{
+  "name": "angular_project_structure",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "amankareem <aman.kareem@storeking.in>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "angular": "^1.6.9",
+    "bootstrap": "^4.0.0",
+    "angular-route": "^1.6.9",
+    "angular-toastr": "^2.1.1"
+  }
+}
